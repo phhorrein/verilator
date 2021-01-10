@@ -35,6 +35,10 @@ public:
                    == strncmp(m_info.product, "Chronologic Simulation VCS",
                               strlen("Chronologic Simulation VCS"))) {
             m_simulators.vcs = true;
+        } else if (0
+                   == strncmp(m_info.product, "ModelSim - INTEL FPGA STARTER EDITION",
+                              strlen("ModelSim - INTEL FPGA STARTER EDITION"))) {
+            m_simulators.mti = true;
         } else {
             printf("%%Warning: %s:%d: Unknown simulator in TestSimulator.h: %s\n", __FILE__,
                    __LINE__, m_info.product);

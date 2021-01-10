@@ -576,7 +576,7 @@ sub new {
         make_main => 1,         # Make __main.cpp
         make_pli => 0,          # need to compile pli
         sc_time_resolution => "SC_PS",  # Keep - PS is SystemC default
-        sim_time => 1100,
+        sim_time => 10100,
         benchmark => $opt_benchmark,
         verbose => $opt_verbose,
         run_env => '',
@@ -598,7 +598,9 @@ sub new {
                       .(($^O eq "darwin" )
                         ? " -Wl,-undefined,dynamic_lookup"
                         : " -export-dynamic")
+                      ." -DTEST_OBJ_DIR=$self->{obj_dir}"
                       ." -o $self->{obj_dir}/libvpi.so"],
+        pli_flags2 => [],
         # ATSIM
         atsim => 0,
         atsim_flags => [split(/\s+/,"-c +sv +define+ATSIM"),
@@ -1166,7 +1168,7 @@ sub compile {
 
     if ($param{make_pli}) {
         $self->oprint("Compile vpi\n") if $self->{verbose};
-        my @cmd = ($ENV{CXX}, @{$param{pli_flags}}, "-DIS_VPI", $ENV{CFLAGS},
+        my @cmd = ($ENV{CXX}, @{$param{pli_flags}}, @{$param{pli_flags2}}, "-DIS_VPI", $ENV{CFLAGS},
                    "$self->{t_dir}/$self->{pli_filename}");
 
         $self->_run(logfile=>"$self->{obj_dir}/pli_compile.log",
