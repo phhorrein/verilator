@@ -40,39 +40,6 @@ extern "C" int mon_check();
    logic [1:0]        a_p1u1 [1:0]  /*verilator public_flat_rw @(posedge clk) */;
    logic [0:0]        a_p0u12 [1:0][2:0]  /*verilator public_flat_rw @(posedge clk) */;
 
-   typedef struct packed {
-       logic       s_field;
-       logic[2:0]  p_field;
-   } struct_test;
-
-   typedef struct packed {
-       struct_test field0;
-       logic [2:0] p_field;
-       struct_test field1;
-   } outer_struct;
-
-   typedef union packed {
-       logic[3:0] field0;
-       struct_test field1;
-   } union_test;
-
-   struct_test             s  /*verilator public_flat_rw @(posedge clk) */;
-   outer_struct            s_emb  /*verilator public_flat_rw @(posedge clk) */;
-   struct_test  [1:0]      s_p1  /*verilator public_flat_rw @(posedge clk) */;
-   struct_test  [1:0][2:0] s_p12  /*verilator public_flat_rw @(posedge clk) */;
-   struct_test             s_u2 [2:0]  /*verilator public_flat_rw @(posedge clk) */;
-   struct_test [3:0]       s_p3u1 [1:0]  /*verilator public_flat_rw @(posedge clk) */;
-
-   union_test              u;
-
-   real       real_var;
-   byte       byte_var;
-   shortint   shortint_var;
-   int        int_var;
-   longint    longint_var;
-   integer    integer_var;
-   string     string_var = "Hello, World!";
-
    integer 	  status;
 
    // Test loop
@@ -96,7 +63,7 @@ extern "C" int mon_check();
       status = mon_check();
 `endif
       if (status != 0) begin
-         $write("%%Error: t_vpi_var_model.cpp:%0d: C Test failed\n", status);
+         $write("%%Error: t_vpi_var_model_logic.cpp:%0d: C Test failed\n", status);
          $stop;
       end
       $write("*-* All Finished *-*\n");
