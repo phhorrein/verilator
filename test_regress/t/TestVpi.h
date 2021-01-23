@@ -190,14 +190,16 @@ public:
             p = vpi_get_str(vpiName, scope);
             CHECK_RESULT_CSTR(p, acc->m_scope);
         }
-        TestVpiHandle typespec = vpi_handle(vpiTypespec, m_handle);
-        CHECK_RESULT_NZ(typespec);
-        d = vpi_get(vpiType, typespec);
-        CHECK_RESULT(d, acc->m_typespec);
-        if (acc->m_typespecName && !TestSimulator::is_mti()) {
-            // XXX: ModelSim is not able to read the typespec name
-            p = vpi_get_str(vpiName, typespec);
-            CHECK_RESULT_CSTR(p, acc->m_typespecName);
+        if (acc->m_typespec) {
+            TestVpiHandle typespec = vpi_handle(vpiTypespec, m_handle);
+            CHECK_RESULT_NZ(typespec);
+            d = vpi_get(vpiType, typespec);
+            CHECK_RESULT(d, acc->m_typespec);
+            if (acc->m_typespecName && !TestSimulator::is_mti()) {
+                // XXX: ModelSim is not able to read the typespec name
+                p = vpi_get_str(vpiName, typespec);
+                CHECK_RESULT_CSTR(p, acc->m_typespecName);
+            }
         }
         return 0;
     }
