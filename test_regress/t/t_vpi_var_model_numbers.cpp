@@ -66,7 +66,6 @@ bool verbose = true;
 bool verbose = false;
 #endif
 
-
 int mon_check() {
 
     const char* p;
@@ -81,8 +80,8 @@ int mon_check() {
     t.low = 0;
 
     PLI_INT32 d;
-    VpiVarProps *props = new VpiVarProps();
-    VpiVarAcc *acc = new VpiVarAcc();
+    VpiVarProps* props = new VpiVarProps();
+    VpiVarAcc* acc = new VpiVarAcc();
 
     TestVpiHandle vhint = VPI_HANDLE("int_var");
     CHECK_RESULT_NZ(vhint);

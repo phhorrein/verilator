@@ -37,8 +37,8 @@
     do { \
         PLI_INT32 iexp = exp ? 1 : 0; \
         if ((iexp) != (exp)) { \
-            std::cout << std::dec << "%Error: line " << __LINE__ << ": GOT = " << (got) \
-                      << "(" << (((got) == 0) ? false : true) << ")" \
+            std::cout << std::dec << "%Error: line " << __LINE__ << ": GOT = " << (got) << "(" \
+                      << (((got) == 0) ? false : true) << ")" \
                       << "   EXP = " << (iexp) << "(" << (exp) << ")" << std::endl; \
             return __LINE__; \
         } \
@@ -46,8 +46,8 @@
 
 #define CHECK_RESULT_HEX(got, exp) \
     if ((got) != (exp)) { \
-        std::cout << std::dec << "%Error: line " << __LINE__ << std::hex \
-                  << ": GOT = " << (got) << "   EXP = " << (exp) << std::endl; \
+        std::cout << std::dec << "%Error: line " << __LINE__ << std::hex << ": GOT = " << (got) \
+                  << "   EXP = " << (exp) << std::endl; \
         return __LINE__; \
     }
 
@@ -74,31 +74,24 @@
 
 #define CHECK_PROPERTIES(h, props) \
     do { \
-       int propChecks = (h).check_properties((props)); \
-       if (propChecks != 0) { \
-          return __LINE__; \
-       } \
+        int propChecks = (h).check_properties((props)); \
+        if (propChecks != 0) { return __LINE__; } \
     } while (0)
 
 #define CHECK_ACCESSORS(h, acc) \
     do { \
-       int propChecks = (h).check_accessors((acc)); \
-       if (propChecks != 0) { \
-          return __LINE__; \
-       } \
+        int propChecks = (h).check_accessors((acc)); \
+        if (propChecks != 0) { return __LINE__; } \
     } while (0)
-
 
 class VpiVarAcc {
 public:
-    const char *m_module;
-    const char *m_scope;
-    PLI_INT32   m_typespec;
-    const char *m_typespecName;
+    const char* m_module;
+    const char* m_scope;
+    PLI_INT32 m_typespec;
+    const char* m_typespecName;
 
-    VpiVarAcc() {
-        reset();
-    }
+    VpiVarAcc() { reset(); }
 
     void reset() {
         m_module = nullptr;
@@ -112,22 +105,20 @@ class VpiVarProps {
 public:
     bool m_scalar;
     bool m_vector;
-    bool m_array; // DEPRECATED (but we can still test it...)
+    bool m_array;  // DEPRECATED (but we can still test it...)
     bool m_structMember;
     bool m_arrayMember;
     bool m_packedArrayMember;
     PLI_INT32 m_size;
-    const char *m_name;
-    const char *m_fullname;
+    const char* m_name;
+    const char* m_fullname;
     bool m_signedVar;
     bool m_automatic;
     bool m_constant;
     PLI_INT32 m_visibility;
     PLI_INT32 m_arrayType;
 
-    VpiVarProps() {
-        reset();
-    }
+    VpiVarProps() { reset(); }
     void reset() {
         m_scalar = false;
         m_vector = false;
@@ -175,7 +166,7 @@ public:
         m_freeit = false;
     }
 
-    int check_accessors(VpiVarAcc *acc) {
+    int check_accessors(VpiVarAcc* acc) {
         PLI_INT32 d;
         const char* p;
         if (acc->m_module) {
@@ -204,7 +195,7 @@ public:
         return 0;
     }
 
-    int check_properties(VpiVarProps *props) {
+    int check_properties(VpiVarProps* props) {
         PLI_INT32 d;
         const char* p;
         d = vpi_get(vpiVector, m_handle);
@@ -245,5 +236,3 @@ public:
         return 0;
     }
 };
-
-

@@ -66,7 +66,6 @@ bool verbose = true;
 bool verbose = false;
 #endif
 
-
 int mon_check() {
 
     const char* p;
@@ -81,10 +80,10 @@ int mon_check() {
     t.low = 0;
 
     PLI_INT32 d;
-    VpiVarProps *props = new VpiVarProps();
-    VpiVarAcc *acc = new VpiVarAcc();
+    VpiVarProps* props = new VpiVarProps();
+    VpiVarAcc* acc = new VpiVarAcc();
     // Single logic/reg
-    TestVpiHandle vh_onereg  = VPI_HANDLE("onereg");
+    TestVpiHandle vh_onereg = VPI_HANDLE("onereg");
     CHECK_RESULT_NZ(vh_onereg);
     {
         p = vpi_get_str(vpiType, vh_onereg);
@@ -96,13 +95,15 @@ int mon_check() {
         props->m_fullname = "top.t.onereg";
         CHECK_PROPERTIES(vh_onereg, props);
         // a is initialized to 0
-        TestVpiHandle iter = vpi_handle(vpiBit, vh_onereg); // 37.17, detail 12
-        CHECK_RESULT(iter, 0);  // According to standard, it should give !NULL, but MS gives NULL (and it sounds reasonable)
-        TestVpiHandle i = vpi_handle(vpiExpr, vh_onereg); // 37.17, detail 8
-        CHECK_RESULT(i, 0);  // According to standard, it should give !NULL, but MS gives NULL (and it is a bug)
+        TestVpiHandle iter = vpi_handle(vpiBit, vh_onereg);  // 37.17, detail 12
+        CHECK_RESULT(iter, 0);  // According to standard, it should give !NULL, but MS gives NULL
+                                // (and it sounds reasonable)
+        TestVpiHandle i = vpi_handle(vpiExpr, vh_onereg);  // 37.17, detail 8
+        CHECK_RESULT(i, 0);  // According to standard, it should give !NULL, but MS gives NULL (and
+                             // it is a bug)
     }
     // One-dimensional packed array
-    TestVpiHandle vha_p0  = VPI_HANDLE("a_p0");
+    TestVpiHandle vha_p0 = VPI_HANDLE("a_p0");
     CHECK_RESULT_NZ(vha_p0);
     {
         // FIXME: add vpiBit/vpiParent access
@@ -123,7 +124,7 @@ int mon_check() {
         v.value.integer = 1;
         vpi_put_value(vha_p0, &v, &t, vpiNoDelay);
     }
-    TestVpiHandle vha_p1  = VPI_HANDLE("a_p1");
+    TestVpiHandle vha_p1 = VPI_HANDLE("a_p1");
     CHECK_RESULT_NZ(vha_p1);
     {
         // FIXME: add vpiBit/vpiParent access
@@ -139,7 +140,7 @@ int mon_check() {
         TestVpiHandle vha_p1_idx1 = vpi_handle_by_index(vha_p1, 1);
         CHECK_RESULT_NZ(vha_p1_idx1);
     }
-    TestVpiHandle vha_sp1  = VPI_HANDLE("a_sp1");
+    TestVpiHandle vha_sp1 = VPI_HANDLE("a_sp1");
     CHECK_RESULT_NZ(vha_sp1);
     {
         // FIXME: add vpiBit/vpiParent access
@@ -156,7 +157,7 @@ int mon_check() {
         TestVpiHandle vha_sp1_idx1 = vpi_handle_by_index(vha_sp1, 1);
         CHECK_RESULT_NZ(vha_sp1_idx1);
     }
-    TestVpiHandle vha_p21  = VPI_HANDLE("a_p21");
+    TestVpiHandle vha_p21 = VPI_HANDLE("a_p21");
     CHECK_RESULT_NZ(vha_p21);
     {
         p = vpi_get_str(vpiType, vha_p21);
@@ -190,7 +191,7 @@ int mon_check() {
             CHECK_PROPERTIES(vha_p21_idx1_idx0, props);
         }
     }
-    TestVpiHandle vha_u0  = VPI_HANDLE("a_u0");
+    TestVpiHandle vha_u0 = VPI_HANDLE("a_u0");
     CHECK_RESULT_NZ(vha_u0);
     {
         // FIXME: add vpiNet/vpiParent access
@@ -216,7 +217,7 @@ int mon_check() {
         v.value.integer = 1;
         vpi_put_value(vha_u0_idx0, &v, &t, vpiNoDelay);
     }
-    TestVpiHandle vha_u2  = VPI_HANDLE("a_u2");
+    TestVpiHandle vha_u2 = VPI_HANDLE("a_u2");
     CHECK_RESULT_NZ(vha_u0);
     {
         // FIXME: add vpiNet/vpiParent access
@@ -256,7 +257,7 @@ int mon_check() {
         vpi_get_value(vha_u2_r0_r, &v);
         CHECK_RESULT(v.value.integer, 0);
     }
-    TestVpiHandle vha_p1u1  = VPI_HANDLE("a_p1u1");
+    TestVpiHandle vha_p1u1 = VPI_HANDLE("a_p1u1");
     CHECK_RESULT_NZ(vha_p1u1);
     {
         // FIXME: add vpiNet/vpiParent access and vpiBit/vpiParent
@@ -281,7 +282,7 @@ int mon_check() {
         props->m_fullname = "top.t.a_p1u1[0]";
         CHECK_PROPERTIES(vha_p1u1_idx0, props);
     }
-    TestVpiHandle vha_p0u12  = VPI_HANDLE("a_p0u12");
+    TestVpiHandle vha_p0u12 = VPI_HANDLE("a_p0u12");
     CHECK_RESULT_NZ(vha_p0u12);
     {
         // FIXME: add vpiNet/vpiParent access and vpiBit/vpiParent

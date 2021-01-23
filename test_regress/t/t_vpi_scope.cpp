@@ -67,8 +67,8 @@ int mon_check() {
     t.low = 0;
 
     PLI_INT32 d;
-    VpiVarProps *props = new VpiVarProps();
-    VpiVarAcc *acc = new VpiVarAcc();
+    VpiVarProps* props = new VpiVarProps();
+    VpiVarAcc* acc = new VpiVarAcc();
     // First, let's iterate and find module "t"
     vpiHandle mod_iter = vpi_iterate(vpiModule, NULL);
     CHECK_RESULT_NZ(mod_iter);
@@ -105,7 +105,7 @@ int mon_check() {
         acc->m_scope = "t";
         CHECK_ACCESSORS(vh_top_var, acc);
         // gen_for_var is not in this scope
-        TestVpiHandle vh_unreachable = vpi_handle_by_name((PLI_BYTE8 *)"gen_for_var", vh_t);
+        TestVpiHandle vh_unreachable = vpi_handle_by_name((PLI_BYTE8*)"gen_for_var", vh_t);
         CHECK_RESULT(vh_unreachable, 0);
     }
 
@@ -131,7 +131,7 @@ int mon_check() {
         acc->m_module = "t";
         acc->m_scope = "named_for[1]";
         CHECK_ACCESSORS(vh_for_var, acc);
-        TestVpiHandle vh_direct_for_var = vpi_handle_by_name((PLI_BYTE8 *)"gen_for_var", vh_for_1);
+        TestVpiHandle vh_direct_for_var = vpi_handle_by_name((PLI_BYTE8*)"gen_for_var", vh_for_1);
         CHECK_RESULT_NZ(vh_direct_for_var);
         CHECK_PROPERTIES(vh_direct_for_var, props);
         CHECK_ACCESSORS(vh_direct_for_var, acc);
@@ -171,7 +171,7 @@ int mon_check() {
         acc->m_module = "t";
         acc->m_scope = "named_for[0]";
         CHECK_ACCESSORS(vh_for_var, acc);
-        TestVpiHandle vh_direct_for_var = vpi_handle_by_name((PLI_BYTE8 *)"gen_for_var", vh_for_0);
+        TestVpiHandle vh_direct_for_var = vpi_handle_by_name((PLI_BYTE8*)"gen_for_var", vh_for_0);
         CHECK_RESULT_NZ(vh_direct_for_var);
         CHECK_PROPERTIES(vh_direct_for_var, props);
         CHECK_ACCESSORS(vh_direct_for_var, acc);

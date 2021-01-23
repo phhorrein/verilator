@@ -66,7 +66,6 @@ bool verbose = true;
 bool verbose = false;
 #endif
 
-
 int mon_check() {
 
     const char* p;
@@ -81,8 +80,8 @@ int mon_check() {
     t.low = 0;
 
     PLI_INT32 d;
-    VpiVarProps *props = new VpiVarProps();
-    VpiVarAcc *acc = new VpiVarAcc();
+    VpiVarProps* props = new VpiVarProps();
+    VpiVarAcc* acc = new VpiVarAcc();
 
     TestVpiHandle vhs = VPI_HANDLE("s");
     CHECK_RESULT_NZ(vhs);
@@ -106,7 +105,7 @@ int mon_check() {
         CHECK_RESULT_NZ(vhs_iter);
         p = vpi_get_str(vpiType, vhs_iter);
         CHECK_RESULT_CSTR(p, "vpiIterator");
-        
+
         TestVpiHandle vhs_field0 = vpi_scan(vhs_iter);
         CHECK_RESULT_NZ(vhs_field0);
         p = vpi_get_str(vpiType, vhs_field0);
@@ -118,7 +117,7 @@ int mon_check() {
         props->m_size = 1;
         props->m_structMember = true;
         CHECK_PROPERTIES(vhs_field0, props);
-        
+
         TestVpiHandle vhs_field1 = vpi_scan(vhs_iter);
         CHECK_RESULT_NZ(vhs_field1);
         p = vpi_get_str(vpiType, vhs_field1);
@@ -198,7 +197,7 @@ int mon_check() {
         props->m_structMember = true;
         CHECK_PROPERTIES(vhs_emb_field0_sfield, props);
     }
-    
+
     TestVpiHandle vhs_p1 = VPI_HANDLE("s_p1");
     CHECK_RESULT_NZ(vhs_p1);
     {
@@ -251,7 +250,7 @@ int mon_check() {
             CHECK_PROPERTIES(vhs_p1_idx0_field0, props);
         }
     }
-    
+
     TestVpiHandle vhs_p12 = VPI_HANDLE("s_p12");
     CHECK_RESULT_NZ(vhs_p12);
     {
