@@ -115,6 +115,8 @@ int mon_check() {
     CHECK_RESULT_NZ(vh_for_1);
     p = vpi_get_str(vpiName, vh_for_1);
     CHECK_RESULT_CSTR(p, "named_for[1]");
+    p = vpi_get_str(vpiType, vh_for_1);
+    CHECK_RESULT_CSTR(p, "vpiGenScope");
     {
         TestVpiHandle t_vars = vpi_iterate(vpiVariables, vh_for_1);
         CHECK_RESULT_NZ(t_vars);
@@ -191,6 +193,35 @@ int mon_check() {
         CHECK_RESULT_CSTR(p, "named_for[0]");
     }
 
+    TestVpiHandle vh_iter_net = vpi_iterate(vpiNet, vh_t);
+    CHECK_RESULT_NZ(vh_iter_net);
+    {
+        TestVpiHandle vh_clk = vpi_scan(vh_iter_net);
+        CHECK_RESULT_NZ(vh_clk);
+        props->reset();
+        props->m_name = "clk";
+        props->m_fullname = "top.t.clk";
+        props->m_scalar = true;
+        CHECK_PROPERTIES(vh_clk, props);
+        acc->reset();
+        acc->m_module = "t";
+        CHECK_ACCESSORS(vh_clk, acc);
+        TestVpiHandle vh_top_net = vpi_scan(vh_iter_net);
+        CHECK_RESULT_NZ(vh_top_net);
+        props->reset();
+        props->m_name = "top_net";
+        props->m_fullname = "top.t.top_net";
+        props->m_scalar = true;
+        CHECK_PROPERTIES(vh_top_net, props);
+        acc->reset();
+        acc->m_module = "t";
+        CHECK_ACCESSORS(vh_top_net, acc);
+        if (!TestSimulator::is_mti()) {
+            TestVpiHandle last = vpi_scan(vh_iter_net);
+            CHECK_RESULT(last, 0);
+        }
+    }
+
     TestVpiHandle vh_iter_reg = vpi_iterate(vpiReg, vh_t);
     CHECK_RESULT_NZ(vh_iter_reg);
     {
@@ -205,6 +236,21 @@ int mon_check() {
         acc->m_module = "t";
         acc->m_scope = "t";
         CHECK_ACCESSORS(vh_top_var, acc);
+        TestVpiHandle vh_gen_var = vpi_scan(vh_iter_reg);
+        CHECK_RESULT_NZ(vh_gen_var);
+        props->reset();
+        props->m_name = "gen_var";
+        props->m_fullname = "top.t.gen_var";
+        props->m_scalar = true;
+        CHECK_PROPERTIES(vh_gen_var, props);
+        acc->reset();
+        acc->m_module = "t";
+        acc->m_scope = "t";
+        CHECK_ACCESSORS(vh_gen_var, acc);
+        if (!TestSimulator::is_mti()) {
+            TestVpiHandle last = vpi_scan(vh_iter_reg);
+            CHECK_RESULT(last, 0);
+        }
     }
 
     TestVpiHandle vh_iter_reg_array = vpi_iterate(vpiRegArray, vh_t);

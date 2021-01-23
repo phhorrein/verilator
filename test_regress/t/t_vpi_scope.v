@@ -29,6 +29,9 @@ module t (/*AUTOARG*/
    logic top_var = 1'b0;
    logic top_array[1:0] = '{default: 1'b0};
    integer status;
+   wire logic top_net;
+
+   assign top_net = top_var;
 
    generate
    // This one should not be found...
